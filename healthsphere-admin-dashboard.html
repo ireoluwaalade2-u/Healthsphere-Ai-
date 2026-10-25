@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102b42">
+  <title>HealthSphere AI | Admin Dashboard</title>
+  <style>
+    :root{--navy:#102b42;--navy2:#173d52;--teal:#087f8c;--teal-light:#e7f7f5;--ink:#20364b;--muted:#7f8e9e;--line:#e7edf2;--bg:#f5f7fa;--white:#fff;--amber:#a06e20}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:14px;-webkit-font-smoothing:antialiased}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #8ddbd8;outline-offset:2px}
+    .layout{min-height:100vh}.sidebar{position:fixed;inset:0 auto 0 0;width:252px;background:var(--navy);color:#d8e4ec;display:flex;flex-direction:column;overflow-y:auto;z-index:30;transition:transform .2s ease}.brand{display:flex;align-items:center;gap:11px;padding:21px 19px;border-bottom:1px solid #294456}.brand-mark{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:linear-gradient(145deg,#1bb1aa,#087784);font-weight:800;font-size:19px;color:white}.brand-name{font-weight:800;font-size:16px;letter-spacing:-.5px;color:white}.brand-sub{margin-top:4px;font-size:9px;letter-spacing:1.4px;color:#9bb0be}.workspace{margin:18px 13px 12px;padding:12px;border:1px solid #2d4a5d;border-radius:10px;background:#19364a;display:flex;align-items:center;gap:10px}.workspace-icon{display:grid;place-items:center;width:33px;height:33px;border-radius:8px;background:#28586a;color:#b8f5ed;font-weight:800}.workspace strong,.workspace small{display:block}.workspace strong{font-size:11px;color:white}.workspace small{font-size:10px;color:#a6bac7;margin-top:4px}.nav{padding:8px 12px}.nav-label{font-size:9px;font-weight:800;letter-spacing:1.5px;color:#7f99aa;margin:13px 10px 9px}.nav-link{width:100%;display:flex;align-items:center;gap:12px;text-align:left;border:0;border-radius:7px;padding:11px 12px;margin:3px 0;background:transparent;color:#b4c4cf;font-size:12px}.nav-link:hover{background:#1b3c50;color:#fff}.nav-link.active{background:var(--teal);color:white;box-shadow:inset 3px 0 #77e1d6}.nav-icon{width:18px;text-align:center;font-size:16px}.side-bottom{margin-top:auto;padding:12px 13px 0}.help-box{border:1px solid #304d60;border-radius:9px;padding:14px;background:#173348}.help-box b{display:block;color:white;font-size:11px;margin:8px 0}.help-box p{font-size:10px;line-height:1.7;color:#a8bac6;margin:0 0 10px}.help-box button{border:0;padding:0;background:none;color:#9be7de;font-size:10px;font-weight:700}.admin-profile{display:flex;align-items:center;gap:9px;border-top:1px solid #294456;margin-top:15px;padding:14px 2px}.avatar{width:33px;height:33px;border-radius:50%;display:grid;place-items:center;background:#2d6372;color:#e3fffa;font-size:10px;font-weight:800}.admin-profile strong,.admin-profile small{display:block}.admin-profile strong{font-size:10px;color:white}.admin-profile small{font-size:9px;color:#9aafbd;margin-top:4px}
+    .main{margin-left:252px;min-height:100vh}.topbar{height:66px;background:white;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 34px;gap:15px}.crumb{display:flex;align-items:center;gap:10px;color:#8a98a6;font-size:11px}.crumb strong{color:#34495d}.top-right{display:flex;align-items:center;gap:12px}.status-pill{display:flex;align-items:center;gap:7px;padding:8px 10px;border-radius:6px;background:#fff6e7;color:var(--amber);font-size:10px;font-weight:700}.status-pill i{width:6px;height:6px;border-radius:50%;background:#dca74e}.small-btn{border:1px solid var(--line);border-radius:7px;background:#fff;color:#65778a;padding:8px 10px}.mobile-menu,.close-menu{display:none}
+    .content{max-width:1500px;padding:30px 34px 20px;margin:auto}.page-head{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:24px}.eyebrow{font-size:9px;letter-spacing:1.5px;font-weight:800;color:var(--teal);margin:0 0 8px}.page-head h1{font-size:27px;letter-spacing:-1px;margin:0;color:#192f44}.subtitle{font-size:12px;color:#8492a0;margin:8px 0 0;line-height:1.6}.primary{border:0;border-radius:7px;background:var(--teal);color:white;padding:11px 15px;font-size:11px;font-weight:750;white-space:nowrap}.primary:hover{background:#066c77}
+    .hero{position:relative;overflow:hidden;display:flex;min-height:220px;border-radius:12px;color:white;background:linear-gradient(110deg,#10374c,#105a65 68%,#087f86);box-shadow:0 8px 24px #12384b12}.hero-copy{position:relative;z-index:2;padding:28px 30px;max-width:680px}.hero-label{font-size:9px;letter-spacing:1.3px;color:#a8eee3;font-weight:800}.hero h2{font-size:24px;line-height:1.3;letter-spacing:-.6px;margin:14px 0 9px;max-width:470px}.hero p{font-size:11px;line-height:1.8;color:#d1e6e9;max-width:490px;margin:0}.hero button{margin-top:16px;background:white;color:#155267;border:0;border-radius:6px;padding:10px 13px;font-size:10px;font-weight:750}.hero-art{position:absolute;right:0;top:0;bottom:0;width:260px;opacity:.85}.ring{position:absolute;border:1px solid #c5fff02e;border-radius:50%;width:230px;height:230px;right:8px;top:-8px}.ring.r2{width:164px;height:164px;right:41px;top:25px;border-width:2px}.cross{position:absolute;top:62px;right:90px;width:62px;height:62px;border:1px solid #b9f4e4a8;border-radius:18px;background:#b4f1e01a;color:#d7fff5;display:grid;place-items:center;font-size:47px;font-weight:300;transform:rotate(-8deg)}.art-caption{position:absolute;bottom:20px;right:20px;font-size:7px;letter-spacing:1.4px;color:#b3dcdf}
+    .section{margin-top:27px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:14px}.section-head h2,.panel-head h2{font-size:14px;font-weight:800;letter-spacing:-.2px;margin:0;color:#20364b}.section-head p,.panel-head p{font-size:10px;line-height:1.6;color:#8996a4;margin:6px 0 0}.mini-label{font-size:8px;letter-spacing:1px;font-weight:800;color:#9aa5af}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}.metric,.panel{background:white;border:1px solid var(--line);border-radius:10px;min-width:0}.metric{padding:16px}.metric-top{display:flex;align-items:center;justify-content:space-between;gap:7px;color:#758497;font-size:10px}.metric-icon{width:30px;height:30px;display:grid;place-items:center;border-radius:8px;background:var(--teal-light);color:var(--teal);font-size:15px}.metric-number{font-size:28px;font-weight:800;letter-spacing:-.8px;color:#20364b;margin:14px 0 5px}.metric-note{min-height:27px;font-size:9px;line-height:1.5;color:#98a4af;margin:0 0 12px}.metric-foot{border-top:1px solid #f0f3f6;padding-top:10px;display:flex;align-items:center;gap:7px;font-size:9px;color:#8996a4}.dot{width:6px;height:6px;border-radius:50%;background:#dca74e}
+    .two-col{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.9fr);gap:16px;margin-top:17px}.panel{padding:20px}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.panel-head select{max-width:135px;border:1px solid #e3e9ef;border-radius:6px;padding:8px;background:white;color:#657589;font-size:10px}.chart{position:relative;min-height:210px;margin-top:13px;display:grid;place-items:center;overflow:hidden}.gridlines{position:absolute;inset:13px 0;display:flex;flex-direction:column;justify-content:space-between}.gridlines span{border-top:1px dashed #e7edf1}.chart-empty{position:relative;text-align:center;max-width:320px;padding:12px}.chart-icon{width:39px;height:39px;display:grid;place-items:center;margin:auto;border-radius:11px;background:var(--teal-light);color:var(--teal);font-size:20px}.chart-empty strong{display:block;font-size:11px;color:#3d5266;margin-top:11px}.chart-empty p{font-size:10px;line-height:1.7;color:#8e9aa7;margin:6px 0}.text-link{border:0;background:none;color:var(--teal);font-size:10px;font-weight:800;padding:5px 0}.legend{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding-top:12px;border-top:1px solid #eff2f5;color:#788797;font-size:9px}.legend span{display:flex;align-items:center;gap:6px}.legend i{width:7px;height:7px;border-radius:2px;background:var(--teal)}.legend .blue{background:#83a9d5}.legend .no-data{margin-left:auto;color:#a0a9b2}
+    .setup-count{background:#eef8f7;color:var(--teal);padding:6px 8px;border-radius:5px;font-size:9px;font-weight:800}.setup-list{margin-top:12px}.setup-item{width:100%;display:flex;align-items:center;gap:10px;text-align:left;padding:13px 0;border:0;border-bottom:1px solid #eff2f5;background:white}.setup-item:last-child{border-bottom:0}.step-num{width:29px;height:29px;flex-shrink:0;display:grid;place-items:center;border-radius:8px;background:#f0f5f7;color:#748696;font-size:9px;font-weight:800}.step-copy{flex:1;min-width:0}.step-copy strong{display:block;color:#354a5f;font-size:10px}.step-copy small{display:block;color:#98a3ae;font-size:9px;line-height:1.5;margin-top:4px}.arrow{color:#8293a1}
+    .recent{margin-top:17px}.empty{display:flex;align-items:center;flex-direction:column;text-align:center;padding:32px 15px}.empty-symbol{width:42px;height:42px;display:grid;place-items:center;background:#f0f6f7;border-radius:12px;color:var(--teal);font-size:21px}.empty h3{font-size:12px;color:#42566a;margin:12px 0 5px}.empty p{max-width:450px;color:#8e9aa7;font-size:10px;line-height:1.8;margin:0}
+    .settings-list{margin-top:15px}.integration{display:flex;align-items:center;gap:13px;padding:18px 0;border-bottom:1px solid #edf0f4}.integration:last-child{border-bottom:0}.integration-num{width:34px;height:34px;flex-shrink:0;display:grid;place-items:center;border-radius:8px;background:#eef7f7;color:var(--teal);font-size:10px;font-weight:800}.integration-copy{flex:1;min-width:0}.integration-copy strong{font-size:11px;color:#34495e}.integration-copy p{font-size:10px;line-height:1.6;color:#8996a4;margin:5px 0 0}.not-connected{font-size:9px;white-space:nowrap;background:#fff7e9;color:#9a762e;padding:6px 9px;border-radius:5px}.notice{margin-top:18px;padding:15px;border:1px solid #f0dfb9;border-radius:8px;background:#fffaf0}.notice strong{font-size:11px;color:#8a682a}.notice p{font-size:10px;line-height:1.8;color:#7f7156;margin:7px 0 0}.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:20px;padding-bottom:15px;border-bottom:1px solid #edf0f4}.search{display:flex;align-items:center;gap:8px;flex:1;max-width:340px;min-width:180px;padding:9px 11px;border:1px solid #e5eaf0;border-radius:7px;color:#8494a3}.search input{width:100%;min-width:0;border:0;outline:none;background:transparent;font-size:10px;color:#34495e}.backend-status{font-size:9px;color:#9a762e}.footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:22px 0 5px;color:#98a3ae;font-size:9px}.footer-status{display:flex;align-items:center;gap:7px}.footer-status i{width:6px;height:6px;border-radius:50%;background:#dca74e}
+    @media(max-width:1200px){.sidebar{width:225px}.main{margin-left:225px}.content{padding:25px 23px}.topbar{padding:0 23px}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.two-col{grid-template-columns:1fr}}
+    @media(max-width:760px){.sidebar{width:270px;transform:translateX(-100%);box-shadow:12px 0 35px #10263a20}.sidebar.open{transform:translateX(0)}.main{margin-left:0}.topbar{height:58px;padding:0 14px}.mobile-menu{display:inline-grid;place-items:center;width:30px;height:30px;border:1px solid var(--line);border-radius:6px;background:white;color:#344b5f}.close-menu{display:block;margin-left:auto;border:0;background:none;color:#b9cbd8;font-size:23px}.brand{gap:9px}.crumb{gap:7px;font-size:10px}.top-right{gap:7px}.status-pill{font-size:9px;padding:7px}.small-btn{display:none}.content{padding:22px 14px 15px}.page-head{align-items:flex-start}.page-head h1{font-size:23px}.subtitle{font-size:11px}.primary{padding:10px;font-size:10px}.hero{min-height:242px}.hero-copy{padding:22px 18px}.hero h2{font-size:22px;max-width:380px}.hero p{font-size:10px;max-width:350px}.hero-art{width:110px;opacity:.42}.ring{right:-105px}.ring.r2{right:-72px}.cross{right:20px;top:45px}.art-caption{display:none}.section-head{align-items:flex-start;flex-direction:column}.metrics{gap:9px}.metric{padding:12px}.metric-top{font-size:9px}.metric-icon{width:26px;height:26px}.metric-number{font-size:25px}.metric-note{font-size:8px}.metric-foot{font-size:8px}.panel{padding:15px}.footer{line-height:1.7}}
+    @media(max-width:390px){.crumb>span:first-of-type{display:none}.page-head{flex-direction:column}.primary{width:100%}.metrics{grid-template-columns:1fr 1fr}.integration{align-items:flex-start;flex-wrap:wrap}.not-connected{margin-left:47px}.legend{gap:9px}}
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+      <div class="brand"><div class="brand-mark">H+</div><div><div class="brand-name">HealthSphere</div><div class="brand-sub">AI ADMINISTRATION</div></div><button class="close-menu" id="closeMenu" aria-label="Close menu">×</button></div>
+      <div class="workspace"><div class="workspace-icon">H</div><div><strong>HealthSphere AI</strong><small>Platform workspace</small></div></div>
+      <nav class="nav" id="navigation">
+        <div class="nav-label">OVERVIEW</div>
+        <button class="nav-link active" data-page="Dashboard"><span class="nav-icon">▦</span>Dashboard</button>
+        <div class="nav-label">MANAGEMENT</div>
+        <button class="nav-link" data-page="Visitors"><span class="nav-icon">◉</span>Visitors</button>
+        <button class="nav-link" data-page="Users & Access"><span class="nav-icon">♙</span>Users &amp; Access</button>
+        <button class="nav-link" data-page="Healthcare Providers"><span class="nav-icon">✚</span>Healthcare Providers</button>
+        <button class="nav-link" data-page="Appointments"><span class="nav-icon">▣</span>Appointments</button>
+        <button class="nav-link" data-page="Content"><span class="nav-icon">▤</span>Content</button>
+        <div class="nav-label">SYSTEM</div>
+        <button class="nav-link" data-page="Analytics & Reports"><span class="nav-icon">▥</span>Analytics &amp; Reports</button>
+        <button class="nav-link" data-page="Security"><span class="nav-icon">◇</span>Security</button>
+        <button class="nav-link" data-page="Settings"><span class="nav-icon">⚙</span>Settings</button>
+      </nav>
+      <div class="side-bottom"><div class="help-box"><span>ⓘ</span><b>Need assistance?</b><p>Connect your services to activate dashboard features.</p><button data-go="Settings">View setup guide →</button></div><div class="admin-profile"><div class="avatar">HS</div><div><strong>Platform Admin</strong><small>Interface preview</small></div></div></div>
+    </aside>
+    <button class="mobile-overlay" id="overlay" aria-label="Close navigation" hidden></button>
+    <main class="main">
+      <header class="topbar"><div class="crumb"><button class="mobile-menu" id="openMenu" aria-label="Open menu">☰</button><span>HealthSphere</span><span>/</span><strong id="breadcrumb">Dashboard</strong></div><div class="top-right"><span class="status-pill"><i></i> Setup required</span><button class="small-btn" data-go="Settings" aria-label="Open settings">⚙</button></div></header>
+      <div class="content">
+        <section class="page-head"><div><p class="eyebrow">HEALTHSPHERE AI / ADMIN CONSOLE</p><h1 id="pageTitle">Dashboard</h1><p class="subtitle" id="pageSubtitle">Monitor your platform and complete essential setup tasks.</p></div><button class="primary" data-go="Settings">＋ Complete setup</button></section>
+        <section id="dashboardPage">
+          <div class="hero"><div class="hero-copy"><div class="hero-label">● YOUR HEALTHCARE PLATFORM</div><h2>Building a more connected world of healthcare.</h2><p>Your administration centre is ready for configuration. Connect your services to start monitoring real activity.</p><button data-go="Settings">Configure platform&nbsp; →</button></div><div class="hero-art" aria-hidden="true"><div class="ring"></div><div class="ring r2"></div><div class="cross">+</div><div class="art-caption">CARE · INTELLIGENCE · TRUST</div></div></div>
+          <section class="section"><div class="section-head"><div><h2>Platform overview</h2><p>Live figures will appear when the required services are connected.</p></div><span class="mini-label">LIVE DATA NOT CONNECTED</span></div>
+            <div class="metrics">
+              <article class="metric"><div class="metric-top">Total visitors <span class="metric-icon">◉</span></div><div class="metric-number">—</div><p class="metric-note">Connect analytics to view data</p><div class="metric-foot"><i class="dot"></i> Awaiting connection</div></article>
+              <article class="metric"><div class="metric-top">Page views <span class="metric-icon">▤</span></div><div class="metric-number">—</div><p class="metric-note">Connect analytics to view data</p><div class="metric-foot"><i class="dot"></i> Awaiting connection</div></article>
+              <article class="metric"><div class="metric-top">Registered users <span class="metric-icon">♙</span></div><div class="metric-number">—</div><p class="metric-note">Connect authentication</p><div class="metric-foot"><i class="dot"></i> Awaiting connection</div></article>
+              <article class="metric"><div class="metric-top">Provider applications <span class="metric-icon">✚</span></div><div class="metric-number">—</div><p class="metric-note">Connect provider database</p><div class="metric-foot"><i class="dot"></i> Awaiting connection</div></article>
+            </div>
+          </section>
+          <div class="two-col">
+            <section class="panel"><div class="panel-head"><div><h2>Traffic &amp; engagement</h2><p>Website activity overview</p></div><select id="period" aria-label="Reporting period"><option>Last 7 days</option><option>Last 30 days</option><option>Last 90 days</option></select></div><div class="chart"><div class="gridlines"><span></span><span></span><span></span><span></span></div><div class="chart-empty"><div class="chart-icon">▥</div><strong>Analytics not connected</strong><p>Connect an analytics service to see real traffic for <span id="periodLabel">the last 7 days</span>.</p><button class="text-link" data-go="Settings">Configure analytics →</button></div></div><div class="legend"><span><i></i>Visitors</span><span><i class="blue"></i>Page views</span><span class="no-data">No live data yet</span></div></section>
+            <section class="panel"><div class="panel-head"><div><h2>Getting started</h2><p>Prepare your platform</p></div><span class="setup-count">4 steps</span></div><div class="setup-list">
+              <button class="setup-item" data-go="Settings"><span class="step-num">01</span><span class="step-copy"><strong>Website analytics</strong><small>Measure visitors, page views and interactions.</small></span><span class="arrow">→</span></button>
+              <button class="setup-item" data-go="Settings"><span class="step-num">02</span><span class="step-copy"><strong>Authentication</strong><small>Secure administrator sign-in and user accounts.</small></span><span class="arrow">→</span></button>
+              <button class="setup-item" data-go="Settings"><span class="step-num">03</span><span class="step-copy"><strong>Database</strong><small>Connect real provider and appointment records.</small></span><span class="arrow">→</span></button>
+              <button class="setup-item" data-go="Settings"><span class="step-num">04</span><span class="step-copy"><strong>Security controls</strong><small>Enforce administrator roles and audit actions.</small></span><span class="arrow">→</span></button>
+            </div></section>
+          </div>
+          <section class="panel recent"><div class="panel-head"><div><h2>Recent platform activity</h2><p>Latest events from connected services</p></div><button class="text-link" data-go="Analytics & Reports">View reports →</button></div><div class="empty"><div class="empty-symbol">◷</div><h3>Your activity feed is waiting</h3><p>When analytics, authentication and your database are connected, verified activity can appear here.</p></div></section>
+        </section>
+        <section id="otherPage" hidden class="panel">
+          <div class="panel-head"><div><h2 id="sectionTitle">Management</h2><p id="sectionDescription"></p></div></div>
+          <div id="settingsContent" hidden class="settings-list">
+            <div class="integration"><div class="integration-num">01</div><div class="integration-copy"><strong>Website analytics</strong><p>Measure visitors, page views and interactions.</p></div><span class="not-connected">Not connected</span></div>
+            <div class="integration"><div class="integration-num">02</div><div class="integration-copy"><strong>Authentication</strong><p>Secure sign-in and administrator permissions.</p></div><span class="not-connected">Not connected</span></div>
+            <div class="integration"><div class="integration-num">03</div><div class="integration-copy"><strong>Database</strong><p>Store provider and appointment records securely.</p></div><span class="not-connected">Not connected</span></div>
+            <div class="integration"><div class="integration-num">04</div><div class="integration-copy"><strong>Audit logs</strong><p>Record important administrator actions.</p></div><span class="not-connected">Not connected</span></div>
+            <div class="notice"><strong>Healthcare security reminder</strong><p>Use server-side authentication, role-based permissions, encrypted connections, backups and audit logs. Never place secret keys or real patient information in this public frontend file.</p></div>
+          </div>
+          <div id="recordsContent">
+            <div class="toolbar"><label class="search">⌕ <input id="searchInput" type="search" placeholder="Search this section..." aria-label="Search this section"></label><span class="backend-status">Backend connection required</span></div>
+            <div class="empty"><div class="empty-symbol">▤</div><h3 id="emptyTitle">No live records available</h3><p id="emptyDescription">Connect a secure backend and database before displaying real platform records here.</p></div>
+          </div>
+        </section>
+        <footer class="footer"><span>© <span id="year"></span> HealthSphere AI</span><span>Intelligent healthcare. Connected care.</span><span class="footer-status"><i></i> Admin interface preview</span></footer>
+      </div>
+    </main>
+  </div>
+  <script>
+    (() => {
+      const descriptions = {
+        "Dashboard":"Monitor your platform and complete essential setup tasks.",
+        "Visitors":"Understand traffic and how visitors use HealthSphere AI.",
+        "Users & Access":"Manage account access and administrator permissions.",
+        "Healthcare Providers":"Review provider registrations and applications.",
+        "Appointments":"Monitor appointment records once your backend is connected.",
+        "Content":"Organize health education and platform content.",
+        "Analytics & Reports":"Review verified platform activity and reports.",
+        "Security":"Review the security controls required for a healthcare platform.",
+        "Settings":"Connect the services required for live dashboard data."
+      };
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("overlay");
+      const dashboard = document.getElementById("dashboardPage");
+      const other = document.getElementById("otherPage");
+      const settingsContent = document.getElementById("settingsContent");
+      const recordsContent = document.getElementById("recordsContent");
+      const pageTitle = document.getElementById("pageTitle");
+      const breadcrumb = document.getElementById("breadcrumb");
+      const subtitle = document.getElementById("pageSubtitle");
+      function closeMenu(){sidebar.classList.remove("open");overlay.hidden=true;}
+      function navigate(page){
+        pageTitle.textContent=page;
+        breadcrumb.textContent=page;
+        subtitle.textContent=descriptions[page]||"Manage your HealthSphere AI platform.";
+        dashboard.hidden=page!=="Dashboard";
+        other.hidden=page==="Dashboard";
+        settingsContent.hidden=page!=="Settings";
+        recordsContent.hidden=page==="Settings";
+        document.getElementById("sectionTitle").textContent=page==="Settings"?"Platform integrations":page+" management";
+        document.getElementById("sectionDescription").textContent=descriptions[page]||"Manage platform information.";
+        document.getElementById("searchInput").value="";
+        document.getElementById("emptyTitle").textContent="No live records available";
+        document.getElementById("emptyDescription").textContent="Connect a secure backend and database before displaying real platform records here.";
+        document.querySelectorAll(".nav-link").forEach(button=>button.classList.toggle("active",button.dataset.page===page));
+        closeMenu();
+        window.scrollTo({top:0,behavior:"smooth"});
+      }
+      document.querySelectorAll("[data-page]").forEach(button=>button.addEventListener("click",()=>navigate(button.dataset.page)));
+      document.querySelectorAll("[data-go]").forEach(button=>button.addEventListener("click",()=>navigate(button.dataset.go)));
+      document.getElementById("openMenu").addEventListener("click",()=>{sidebar.classList.add("open");overlay.hidden=false;});
+      document.getElementById("closeMenu").addEventListener("click",closeMenu);
+      overlay.addEventListener("click",closeMenu);
+      document.getElementById("period").addEventListener("change",event=>{
+        const labels={"Last 7 days":"the last 7 days","Last 30 days":"the last 30 days","Last 90 days":"the last 90 days"};
+        document.getElementById("periodLabel").textContent=labels[event.target.value];
+      });
+      document.getElementById("searchInput").addEventListener("input",event=>{
+        const query=event.target.value.trim();
+        if(query){
+          document.getElementById("emptyTitle").textContent="Search unavailable without live data";
+          document.getElementById("emptyDescription").textContent="“"+query+"” cannot be matched until a secure backend provides records.";
+        } else {
+          document.getElementById("emptyTitle").textContent="No live records available";
+          document.getElementById("emptyDescription").textContent="Connect a secure backend and database before displaying real platform records here.";
+        }
+      });
+      document.getElementById("year").textContent=new Date().getFullYear();
+    })();
+  </script>
+</body>
+</html>
