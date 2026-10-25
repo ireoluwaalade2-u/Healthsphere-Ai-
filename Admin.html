@@ -1,0 +1,261 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HealthSphere AI | Admin Dashboard</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+body{font-family:Arial,sans-serif;background:#f4f7fb;color:#14213d}
+.sidebar{background:#0b132b;color:white}
+.navbtn{display:block;width:100%;text-align:left;padding:12px;border-radius:9px;color:#cbd5e1}
+.navbtn:hover,.navbtn.active{background:#173b53;color:#fff}
+.panel{background:white;border:1px solid #e5eaf1;border-radius:15px;padding:18px}
+.stat{font-size:28px;font-weight:800;margin:8px 0}
+.small{font-size:12px;color:#64748b}
+th,td{padding:12px;text-align:left;border-bottom:1px solid #edf0f5}
+th{color:#64748b;font-size:12px}
+</style>
+</head>
+<body>
+<div class="min-h-screen md:flex">
+
+<aside class="sidebar md:w-64 p-5">
+  <div class="text-xl font-extrabold mb-1">HealthSphere <span style="color:#02c39a">AI</span></div>
+  <div class="text-xs text-slate-400 mb-7">ADMINISTRATION PORTAL</div>
+
+  <div class="text-xs text-slate-400 mb-2">OVERVIEW</div>
+  <button class="navbtn active" onclick="showPage('overview',this)">▦ Dashboard</button>
+  <button class="navbtn" onclick="showPage('traffic',this)">◉ Visitors & Clicks</button>
+  <button class="navbtn" onclick="showPage('users',this)">♙ Users & Sign-ins</button>
+  <button class="navbtn" onclick="showPage('providers',this)">✚ Hospitals & Professionals</button>
+  <button class="navbtn" onclick="showPage('appointments',this)">▣ Appointments</button>
+  <button class="navbtn" onclick="showPage('content',this)">▤ Content & Health News</button>
+  <button class="navbtn" onclick="showPage('security',this)">♢ Security & Audit Logs</button>
+  <button class="navbtn" onclick="showPage('settings',this)">⚙ Settings</button>
+
+  <div class="mt-8 p-3 rounded-xl bg-slate-800 text-xs text-slate-300">
+    DEMO MODE<br><br>
+    These figures are examples, not live website data.
+  </div>
+</aside>
+
+<main class="flex-1 p-4 md:p-8 min-w-0">
+<header class="flex flex-wrap justify-between items-center gap-3 mb-7">
+  <div>
+    <div class="text-sm text-slate-500">HealthSphere / Administration</div>
+    <h1 id="heading" class="text-2xl md:text-3xl font-extrabold mt-1">Dashboard Overview</h1>
+    <p class="small mt-2">Monitor your healthcare platform from one place.</p>
+  </div>
+  <div class="flex gap-2">
+    <button onclick="exportData()" class="border bg-white rounded-lg px-3 py-2 text-sm">Export CSV</button>
+    <button onclick="alert('Connect an authenticated administrator account to enable this action.')" class="bg-teal-600 text-white rounded-lg px-4 py-2 text-sm">Admin Account</button>
+  </div>
+</header>
+
+<div class="mb-5 rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">
+  <b>Demo data:</b> No real visitor tracking, user accounts or patient records are connected yet.
+</div>
+
+<section id="overview" class="page">
+  <div class="flex flex-wrap justify-between items-center gap-3 mb-4">
+    <h2 class="font-bold text-lg">Platform performance</h2>
+    <select id="period" onchange="changePeriod()" class="border rounded-lg p-2 bg-white text-sm">
+      <option value="7">Last 7 days</option>
+      <option value="30">Last 30 days</option>
+      <option value="90">Last 90 days</option>
+    </select>
+  </div>
+
+  <div class="grid grid-cols-2 xl:grid-cols-4 gap-4 mb-5">
+    <div class="panel"><div class="small">Unique visitors</div><div class="stat" id="visitors">1,284</div><div class="small">Connect analytics for live data</div></div>
+    <div class="panel"><div class="small">Page views</div><div class="stat" id="views">3,692</div><div class="small">Pages opened</div></div>
+    <div class="panel"><div class="small">Button clicks</div><div class="stat" id="clicks">847</div><div class="small">Requires event tracking</div></div>
+    <div class="panel"><div class="small">Registered accounts</div><div class="stat">126</div><div class="small">Illustrative figure only</div></div>
+    <div class="panel"><div class="small">Sign-ins</div><div class="stat">294</div><div class="small">Illustrative events</div></div>
+    <div class="panel"><div class="small">Hospital applications</div><div class="stat">18</div><div class="small">Illustrative figure only</div></div>
+    <div class="panel"><div class="small">Professional applications</div><div class="stat">43</div><div class="small">Illustrative figure only</div></div>
+    <div class="panel"><div class="small">Appointment requests</div><div class="stat">57</div><div class="small">Illustrative figure only</div></div>
+  </div>
+
+  <div class="grid lg:grid-cols-3 gap-4 mb-5">
+    <div class="panel lg:col-span-2">
+      <h3 class="font-bold mb-4">Traffic overview</h3>
+      <canvas id="trafficChart" height="125"></canvas>
+    </div>
+    <div class="panel">
+      <h3 class="font-bold mb-4">Traffic sources</h3>
+      <canvas id="sourceChart"></canvas>
+      <p class="small mt-3">Example distribution only.</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3 class="font-bold mb-4">Recent demo activity</h3>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead><tr><th>Event</th><th>Section</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Page view</td><td>Home</td><td>Demo</td></tr>
+          <tr><td>Button click</td><td>Get Started</td><td>Demo</td></tr>
+          <tr><td>Registration</td><td>Provider portal</td><td>Demo</td></tr>
+          <tr><td>Page view</td><td>Health Library</td><td>Demo</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="traffic" class="page hidden">
+  <div class="grid md:grid-cols-3 gap-4 mb-5">
+    <div class="panel"><div class="small">Unique visitors</div><div class="stat">1,284</div></div>
+    <div class="panel"><div class="small">Total page views</div><div class="stat">3,692</div></div>
+    <div class="panel"><div class="small">Tracked clicks</div><div class="stat">847</div></div>
+  </div>
+  <div class="panel">
+    <h2 class="font-bold mb-3">What can be tracked?</h2>
+    <p class="text-sm leading-7">Page views, navigation clicks, calls to action, searches, form starts and successful form submissions. Actual data requires analytics instrumentation. Avoid collecting passwords, medical details or unnecessary personal information in analytics events.</p>
+    <a class="inline-block mt-4 text-teal-700 underline" href="https://vercel.com/docs/analytics" target="_blank" rel="noopener">Open Vercel Analytics documentation</a>
+  </div>
+</section>
+
+<section id="users" class="page hidden">
+  <div class="panel">
+    <h2 class="font-bold text-xl mb-2">Users & Sign-ins</h2>
+    <p class="small mb-4">Connect an authentication provider and database to populate this section with real account records.</p>
+    <div class="overflow-x-auto"><table class="w-full text-sm">
+      <thead><tr><th>Account type</th><th>Demo count</th><th>Admin action</th></tr></thead>
+      <tbody>
+        <tr><td>Patients / public users</td><td>80</td><td>Manage via secure backend</td></tr>
+        <tr><td>Healthcare professionals</td><td>32</td><td>Review applications</td></tr>
+        <tr><td>Hospital accounts</td><td>14</td><td>Review applications</td></tr>
+      </tbody>
+    </table></div>
+    <p class="small mt-4">Never store passwords in this dashboard or expose session tokens.</p>
+  </div>
+</section>
+
+<section id="providers" class="page hidden">
+  <div class="panel">
+    <h2 class="font-bold text-xl mb-4">Hospitals & Professionals</h2>
+    <p class="text-sm mb-4">Review institution and professional applications after identity, credentials and licences have been checked through appropriate processes.</p>
+    <div class="overflow-x-auto"><table class="w-full text-sm">
+      <thead><tr><th>Application type</th><th>Demo pending</th><th>Next step</th></tr></thead>
+      <tbody>
+        <tr><td>Hospitals / clinics</td><td>6</td><td>Connect verification workflow</td></tr>
+        <tr><td>Doctors / nurses</td><td>15</td><td>Connect verification workflow</td></tr>
+        <tr><td>Laboratories / other professionals</td><td>9</td><td>Connect verification workflow</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<section id="appointments" class="page hidden">
+  <div class="panel">
+    <h2 class="font-bold text-xl mb-3">Appointment management</h2>
+    <p class="text-sm leading-7">Once bookings are implemented, authorised staff can review requests, scheduling status, cancellations and completion rates. Keep clinical details out of general analytics.</p>
+    <div class="mt-4 grid md:grid-cols-3 gap-3">
+      <div class="rounded-lg bg-slate-50 p-4"><div class="small">Pending</div><div class="stat">21</div></div>
+      <div class="rounded-lg bg-slate-50 p-4"><div class="small">Confirmed</div><div class="stat">28</div></div>
+      <div class="rounded-lg bg-slate-50 p-4"><div class="small">Completed</div><div class="stat">8</div></div>
+    </div>
+    <p class="small mt-3">Demo figures only.</p>
+  </div>
+</section>
+
+<section id="content" class="page hidden">
+  <div class="panel">
+    <h2 class="font-bold text-xl mb-3">Content & Health News</h2>
+    <p class="text-sm leading-7">Future controls for publishing health articles, updating educational resources, managing reported content and reviewing source quality.</p>
+    <button class="mt-4 bg-teal-600 text-white rounded-lg px-4 py-2" onclick="alert('Connect a protected content-management backend to enable publishing.')">New article — setup required</button>
+  </div>
+</section>
+
+<section id="security" class="page hidden">
+  <div class="panel">
+    <h2 class="font-bold text-xl mb-3">Security & Audit Logs</h2>
+    <p class="text-sm leading-7">The production version should record administrator actions, permission changes, failed login attempts and sensitive-record access in a protected, tamper-resistant audit log.</p>
+    <ul class="list-disc pl-5 mt-3 text-sm leading-7">
+      <li>Administrator-only access enforced by the server.</li>
+      <li>Multi-factor authentication where available.</li>
+      <li>Role-based permissions and least-privilege access.</li>
+      <li>Secure storage, encryption, backups and recovery testing.</li>
+      <li>Never expose patient records to public analytics.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="settings" class="page hidden">
+  <div class="panel">
+    <h2 class="font-bold text-xl mb-3">Platform Settings</h2>
+    <p class="text-sm leading-7">Configure analytics, user roles, notifications, privacy settings and integrations in the production backend.</p>
+    <button class="mt-4 border rounded-lg px-4 py-2" onclick="alert('Demo only. Real settings must be stored and validated by your backend.')">Check integration setup</button>
+  </div>
+</section>
+
+<footer class="text-xs text-slate-500 mt-8">HealthSphere AI · Admin interface prototype · Demo values are not real metrics.</footer>
+</main>
+</div>
+
+<script>
+const sections = {
+overview:"Dashboard Overview",traffic:"Visitors & Clicks",
+users:"Users & Sign-ins",providers:"Hospitals & Professionals",
+appointments:"Appointments",content:"Content & Health News",
+security:"Security & Audit Logs",settings:"Platform Settings"
+};
+
+function showPage(id,btn){
+  document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));
+  document.getElementById(id).classList.remove("hidden");
+  document.querySelectorAll(".navbtn").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  document.getElementById("heading").textContent=sections[id];
+}
+
+let trafficChart,sourceChart;
+function initCharts(){
+  trafficChart=new Chart(document.getElementById("trafficChart"),{
+    type:"line",
+    data:{labels:["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
+    datasets:[
+      {label:"Visitors (demo)",data:[120,190,160,250,210,290,340],borderColor:"#00a896",backgroundColor:"rgba(0,168,150,.12)",fill:true,tension:.35},
+      {label:"Page views (demo)",data:[280,340,310,430,400,510,620],borderColor:"#4263eb",tension:.35}
+    ]},
+    options:{responsive:true,plugins:{legend:{position:"bottom"}}}
+  });
+  sourceChart=new Chart(document.getElementById("sourceChart"),{
+    type:"doughnut",
+    data:{labels:["Direct","Search","Social","Referral"],
+    datasets:[{data:[40,30,20,10],backgroundColor:["#00a896","#4263eb","#f59e0b","#a78bfa"]}]},
+    options:{plugins:{legend:{position:"bottom"}}}
+  });
+}
+function changePeriod(){
+  const n=Number(document.getElementById("period").value);
+  document.getElementById("visitors").textContent=n===7?"1,284":n===30?"4,872":"12,640";
+  document.getElementById("views").textContent=n===7?"3,692":n===30?"14,108":"38,420";
+  document.getElementById("clicks").textContent=n===7?"847":n===30?"3,205":"9,114";
+}
+function exportData(){
+  const rows=[
+    ["Metric","Value","Data type"],
+    ["Unique visitors","1284","DEMO"],
+    ["Page views","3692","DEMO"],
+    ["Button clicks","847","DEMO"],
+    ["Registered accounts","126","DEMO"]
+  ];
+  const csv=rows.map(r=>r.join(",")).join("\n");
+  const blob=new Blob([csv],{type:"text/csv;charset=utf-8;"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;a.download="healthsphere-demo-report.csv";a.click();
+  URL.revokeObjectURL(url);
+}
+initCharts();
+</script>
+</body>
+  </html>
+                                                                                          
